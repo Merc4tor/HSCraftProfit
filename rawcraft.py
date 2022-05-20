@@ -421,14 +421,14 @@ def print_craft_cost_to_file(recipeList, craftCost, craftCostInOrder):
 
 
 
-#load_item_neu_data_to_file()
+load_item_neu_data_to_file()
 
 #playerData = get_player_data(input('What is your Username?: '), input('What is your profile Name?: '))
 itemData = get_items_data()
 bazaarData = get_bazaar()
 neuData = json.load(open('itemData.txt', 'r'))
-#auction = auctionHouse()
-#dill.dump(auction, file=open('auctions.txt', 'wb'))
+auction = auctionHouse()
+dill.dump(auction, file=open('auctions.txt', 'wb'))
 auction = dill.load(open('auctions.txt', 'rb'))
 
 
