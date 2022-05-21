@@ -258,13 +258,15 @@ def calc_raw_value(id):
     global auction
     if id == 'NECRON_BLADE':
         id = 'NECRON_HANDLE'
-    try:
-        if not id in list(bazaarData):
-            itemValue = auction.items[str(id)][0]['starting_bid'] / decode_inventory_data(auction.items[str(id)][0]['item_bytes'])['Count']
-        else:
-            itemValue = bazaarData[id]['buyPrice']
-    except:
+    # try:
+    if id in list(bazaarData):
+        itemValue = bazaarData[id]['buyPrice']
+    elif id in list(auction.items):
+        itemValue = auction.items[str(id)][0]['starting_bid']
+    else:
         itemValue = 0
+    # except:
+    #     itemValue = 0
     itemValue = round(itemValue, 1)
     return itemValue
         
@@ -355,7 +357,7 @@ def neuData_to_recipe_list(neuData):
 
 def calc_item_craft_profit(recipeList):
     craftCost = {}
-
+    
     for item in list(recipeList):
         craftCost[item] = {}
         craftCost[item]['original'] = calc_raw_value(item)
@@ -414,8 +416,10 @@ def print_craft_cost_to_file(recipeList, craftCost, craftCostInOrder):
             f.write('diff %         %: ' + str(craftCost[item]['diffProc']) + '\n')
             f.write('Items: \n')
             for i in recipeList[item]:
-                f.write(f"{str(i):<25} {': ':>10} {str(calc_raw_value(i)):<10}{' x ':>0} {str(recipeList[item][i])} {'= ':>3} {calc_raw_value(i) * recipeList[item][i]}" + '\n')
-
+                try:
+                    f.write(f"{str(itemData[i]['name']):<25} {': ':>10} {str(calc_raw_value(i)):<10}{' x ':>0} {str(recipeList[item][i])} {'= ':>3} {calc_raw_value(i) * recipeList[item][i]}" + '\n')
+                except:
+                    f.write(f"{str(i):<25} {': ':>10} {str(calc_raw_value(i)):<10}{' x ':>0} {str(recipeList[item][i])} {'= ':>3} {calc_raw_value(i) * recipeList[item][i]}" + '\n')
             f.write('\n')
             currentItem = currentItem + 1    
 
@@ -436,7 +440,7 @@ recipeList = neuData_to_recipe_list(neuData)
 
 craftCost = calc_item_craft_profit(recipeList)
 
-craftCostInOrder = sort_recipe_list_on_price(recipeList, craftCost, 10000)
+craftCostInOrder = sort_recipe_list_on_price(recipeList, craftCost, 600000)
 
 print_craft_cost_to_file(recipeList, craftCost, craftCostInOrder)
 
