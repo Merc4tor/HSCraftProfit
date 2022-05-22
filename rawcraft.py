@@ -6,8 +6,6 @@ import io
 import dill
 import os
 
-API_KEY = 'YOUR_KEY_HERE TYPE: /API NEW and copy'
-
 craftable_item_blacklist = ['HEAT_CORE','TENTACLE_MEAT', 'MAGMA_CHUNK', 'GAZING_PEARL', 'COLOSSAL_EXP_BOTTLE_UPGRADE', 'BEZOS', 'SULPHURIC_COAL', 'HORN_OF_TAURUS']
 
 reforges = {'dirty': 'DIRT_BOTTLE', 
